@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fardath <fardath@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/16 11:29:21 by fardath           #+#    #+#             */
-/*   Updated: 2022/06/17 12:25:19 by fardath          ###   ########.fr       */
+/*   Created: 2022/06/17 12:55:10 by fardath           #+#    #+#             */
+/*   Updated: 2022/06/17 13:13:59 by fardath          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	action_print(t_rules *rules, int id, char *string)
 {
-	pthread_mutex_lock(&(rules->writing));
+	sem_wait(rules->writing);
 	if (!(rules->dieded))
 	{
 		printf("%lli ", timestamp() - rules->first_timestamp);
 		printf("%i %s\n", id + 1, string);
 	}
-	pthread_mutex_unlock(&(rules->writing));
+	sem_post(rules->writing);
 	return ;
 }
 
